@@ -1,0 +1,36 @@
+var ejs        = require('ejs'),
+    login      = require('./login'),
+    express    = require('express'),
+    // TODO: body-parser deprecated bodyParser: use individual json/urlencoded middlewares server.js:11:10
+    bodyParser = require('body-parser')
+;
+
+var ip    = '0.0.0.0',
+    port  = 1337,
+    app   = express()
+;
+
+app
+    .use(bodyParser())
+    .get('/', function(req, res) {
+        res.render('index.ejs');
+    })
+    .get('/login', function(req, res) {
+        res.render('login.ejs');
+    })
+    .post('/check_login', function(req, res) {
+        login.login(req.body.username);
+        res.writeHead(
+            301,
+            { Location: '/' }
+        );
+        res.end();
+    })
+    .use(function(req, res) {
+        res.setHeader('Content-Type', 'text/plain');
+        res.send(404, 'Page not found!');
+    })
+;
+
+app.listen(port, ip);
+console.log('L\'application est maintenant disponible sur : http://' + ip + ':' + port);

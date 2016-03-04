@@ -1,0 +1,18 @@
+import java.util.ArrayList;
+
+public class NotCreatedDevis implements DevisState {
+	
+	Controller controller;
+	
+	public NotCreatedDevis(Controller controller) {
+		this.controller = controller;
+	}
+
+	public void display(ArrayList data) {
+		
+	}
+
+	public void treat(ArrayList data) {
+		
+	}
+}

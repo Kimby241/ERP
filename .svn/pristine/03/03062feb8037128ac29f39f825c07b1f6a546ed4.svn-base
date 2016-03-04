@@ -1,0 +1,32 @@
+var fs = require('fs');
+
+var filename = 'test/users';
+
+module.exports = {
+    // Test function to init some fake users
+    init: function() {
+        var testUsers = ['barre_a', 'franck', 'jb_rebuffet', 'lucas', 'mejdou_i', 'quifou_s', 'ryouzanki', 'siham', 'stevenyung', 'traore_a', 'veron_j', 'norris_bot', 'bosquig'];
+
+        testUsers.forEach(function(user) {
+            fs.appendFile(filename, (user + '\n'), function(err) {
+                if (err) {
+                    throw err;
+                }
+                console.log('Data appended successfully!');
+            });
+        });
+    },
+
+    // Read users from userfile and return in array (for easier usage)
+    getUsers: function(callback) {
+        fs.readFile(filename, 'utf8', function(err, data) {
+            if (err) {
+                throw err;
+            }
+            console.log('OK: ' + filename);
+            if (callback !== undefined) {
+                callback(data.split('\n'));
+            }
+        });
+    }
+};

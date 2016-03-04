@@ -1,0 +1,22 @@
+import java.util.ArrayList;
+
+public class NotCreatedProspect implements ProspectState {
+	
+	Controller controller;
+	
+	public NotCreatedProspect(Controller controller) {
+		this.controller = controller;
+	}
+
+	public void displayForm(ArrayList data) {
+		controller.getView().ProspectCreateView();
+		controller.getView().setVisible(true);
+	}
+
+	public void treatForm(ArrayList data) {
+		System.out.println("Saving stuff...");
+		controller.getModel().setProspect(controller.getUserState().getUser(), data);
+		controller.setProspectState(controller.getCreatedProspect());
+		controller.getProspectState().displayForm(data);
+	}
+}

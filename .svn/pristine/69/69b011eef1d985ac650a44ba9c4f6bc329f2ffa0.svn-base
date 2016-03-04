@@ -1,0 +1,8 @@
+import java.util.ArrayList;
+
+public interface ProspectState {
+	
+	void displayForm(ArrayList data);
+	
+	void treatForm(ArrayList data);
+}

@@ -1,0 +1,42 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+import IHMPackage.ProspectTab;
+import IHMPackage.LoginPane;
+import IHMPackage.MainScene;
+import IHMPackage.MainScreenPane;
+
+import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+import javafx.scene.control.TabPane;
+import javafx.scene.control.Tab;
+
+/**
+ *
+ * @author Kim
+ */
+public class ERP2042v1 extends Application {
+    
+    @Override
+    public void start(Stage primaryStage) {
+        LoginPane startpage = new LoginPane(primaryStage);
+        MainScreenPane root = MainScreenPane.getInstance();
+        Scene logScene = new Scene(startpage, 650, 600);
+        primaryStage.setTitle("ERP 2042");
+        primaryStage.setScene(logScene);
+        primaryStage.show();
+    }
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        launch(args);
+    }
+    
+}

@@ -1,0 +1,20 @@
+# Projet d'ERP
+Ce fichier est en Markdown, pour le visualiser vous pouvez utiliser un visualisateur en ligne tel que [dillinger.io](http://dillinger.io/)
+
+## Design Pattern par tâche (à revoir) :
+
+ Tâche | Design Pattern
+- | -
+Chargement des utilisateurs à partir d'un fichier TXT | ~~Singleton~~ Aucun en cas de base d'utilisateur dynamique
+Changement des différents états lors des différentes actions | State Machine
+Création d'un prospect/devis | Factory
+
+## Lien utile
+
+### Design pattern (avec des exemples) :
+- [Iterator](http://www.dofactory.com/javascript/iterator-design-pattern)
+- [Composite](http://www.dofactory.com/javascript/composite-design-pattern)
+- [State Machine](http://www.dofactory.com/javascript/state-design-pattern)
+- [Factory](http://www.dofactory.com/javascript/factory-method-design-pattern)
+- [Singleton](http://www.dofactory.com/javascript/singleton-design-pattern)
+- [Observer](http://www.dofactory.com/javascript/observer-design-pattern)

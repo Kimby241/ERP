@@ -1,0 +1,21 @@
+public class LoggedIn implements UserState {
+	
+	Controller controller;
+	
+	public LoggedIn(Controller controller) {
+		this.controller = controller;
+	}
+
+	public void tryToLogin(String username) {
+		System.out.println("Vous ètes déjà connecté");
+	}
+
+	public void displayMenu() {
+		controller.getView().MenuView(controller.getUser());
+		controller.getView().setVisible(true);
+	}
+
+	public String getUser() {
+		return controller.getUser();
+	}
+}

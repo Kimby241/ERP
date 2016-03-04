@@ -1,0 +1,249 @@
+// This is the View
+// Its only job is to display what the user sees
+// It performs no calculations, but instead passes
+// information entered by the user to whomever needs
+// it. 
+
+import java.awt.event.ActionListener;
+import javax.swing.*;
+
+public class View extends JFrame{
+
+	private JPanel currentPanel = new JPanel();
+
+	// MENU VIEW
+	private JLabel lUser = new JLabel();
+	private JButton prospectButton = new JButton("Prospect");
+	private JButton devisButton = new JButton("Devis");
+	private JButton facturationButton = new JButton("Facturation");
+
+	// LOGINVIEW
+	private JTextField tfLogin = new JTextField(10);
+	private JButton loginButton = new JButton("Login");
+
+	//PROSPECT VIEW
+	// Create Prospect View
+	private JLabel lFirstname = new JLabel("Firstname");
+	private JTextField tfFirstname = new JTextField(10);
+	private JLabel lLastname = new JLabel("Lastname");
+	private JTextField tfLastname = new JTextField(10);
+	private JLabel lPhone = new JLabel("Phone");
+	private JTextField tfPhone = new JTextField(10);
+	private JLabel lAddress = new JLabel("Address");
+	private JTextField tfAddress = new JTextField(40);
+	private JLabel lCompanyName = new JLabel("Company Name");
+	private JTextField tfCompanyName = new JTextField(15);
+	private JButton bNext = new JButton("Create");
+
+	// Prospect Needs
+	private JLabel lNeeds = new JLabel();
+	private JTextArea taNeeds = new JTextArea(4, 50);
+
+	// Prospect Confirmed Needs
+	private JLabel lMessage = new JLabel();
+
+	private JLabel lPrix = new JLabel();
+	private JTextField tfPrix = new JTextField();
+	private JButton bNextDevis = new JButton();
+
+	private JButton bCancelDevis = new JButton();
+
+	public View() {
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setSize(600, 200);
+	}
+
+	// MENU
+	public void MenuView(String user){
+		// Sets up the view and adds the components
+		
+		System.out.println(user);
+		this.getContentPane().removeAll();
+		currentPanel = new JPanel();
+		
+		lUser.setText(user);
+		currentPanel.add(lUser);
+		currentPanel.add(prospectButton);
+		currentPanel.add(devisButton);
+		currentPanel.add(facturationButton);
+		
+		this.add(currentPanel);
+		this.getContentPane().repaint();
+		
+		// End of setting up the components --------
+		
+	}
+
+	public void addProspectListener(ActionListener listenForButton){
+		prospectButton.addActionListener(listenForButton);
+	}
+
+	public void addDevisListener(ActionListener listenForButton){
+		devisButton.addActionListener(listenForButton);
+	}
+
+	public void addFacturationListener(ActionListener listenForButton){
+		facturationButton.addActionListener(listenForButton);
+	}
+
+	// Open a popup that contains the error message passed
+	
+	public void displayErrorMessage(String errorMessage){
+		JOptionPane.showMessageDialog(this, errorMessage);
+	}
+
+	
+	// LOGIN
+	public void LoginView(){
+		// Sets up the view and adds the components
+		
+		this.getContentPane().removeAll();
+		currentPanel = new JPanel();
+		currentPanel.add(tfLogin);
+		currentPanel.add(loginButton);
+		
+		this.add(currentPanel);
+		this.getContentPane().repaint();
+
+		// End of setting up the components --------
+		
+	}
+
+	public JTextField getLogin() {
+		return this.tfLogin;
+	}
+
+	public JPanel getPanel() {
+		return this.currentPanel;
+	}
+
+	public void addLoginListener(ActionListener listenForButton){
+		loginButton.addActionListener(listenForButton);
+	}
+
+
+	// PROSPECT
+	public void ProspectCreateView(){
+		// Sets up the view and adds the components
+		
+		this.getContentPane().removeAll();
+		currentPanel = new JPanel();
+		currentPanel.add(lFirstname);
+		currentPanel.add(tfFirstname);
+		currentPanel.add(lLastname);
+		currentPanel.add(tfLastname);
+		currentPanel.add(lPhone);
+		currentPanel.add(tfPhone);
+		currentPanel.add(lAddress);
+		currentPanel.add(tfAddress);
+		currentPanel.add(lCompanyName);
+		currentPanel.add(tfCompanyName);
+		currentPanel.add(bNext);
+		
+		this.add(currentPanel);
+		this.getContentPane().repaint();
+
+		// End of setting up the components --------
+		
+	}
+
+	public String getFirstname() {
+		return this.tfFirstname.getText();
+	}
+
+	public String getLastname() {
+		return this.tfLastname.getText();
+	}
+
+	public String getPhone() {
+		return this.tfPhone.getText();
+	}
+
+	public String getAddress() {
+		return this.tfAddress.getText();
+	}
+
+	public String getCompanyName() {
+		return this.tfCompanyName.getText();
+	}
+
+	public void addCreateListener(ActionListener listenForButton){
+		bNext.addActionListener(listenForButton);
+	}
+
+	public void ProspectValidateView(String firstname, String lastname, String phone, String address, String companyName) {
+		this.getContentPane().removeAll();
+		currentPanel = new JPanel();
+		lFirstname.setText(firstname);
+		currentPanel.add(lFirstname);
+		lLastname.setText(lastname);
+		currentPanel.add(lLastname);
+		lPhone.setText(phone);
+		currentPanel.add(lPhone);
+		lAddress.setText(address);
+		currentPanel.add(lAddress);
+		lCompanyName.setText(companyName);
+		currentPanel.add(lCompanyName);
+		bNext.setText("Valider");
+		currentPanel.add(bNext);
+
+		this.add(currentPanel);
+		this.getContentPane().repaint();
+	}
+
+	public void ProspectNeedsView(String firstname, String lastname) {
+		this.getContentPane().removeAll();
+		currentPanel = new JPanel();
+		lFirstname.setText(firstname);
+		currentPanel.add(lFirstname);
+		lLastname.setText(lastname);
+		currentPanel.add(lLastname);
+		lNeeds.setText("Besoin du client");
+		currentPanel.add(lNeeds);
+		currentPanel.add(taNeeds);
+		bNext.setText("Valider");
+		currentPanel.add(bNext);
+
+		this.add(currentPanel);
+		this.getContentPane().repaint();
+	}
+
+	public String getLabelFullname() {
+		return this.lFirstname.getText() + " " + this.lLastname.getText();
+	}
+
+	public String getNeeds() {
+		return this.taNeeds.getText();
+	}
+
+	public void ConfirmedNeedProspect() {
+		this.getContentPane().removeAll();
+		currentPanel = new JPanel();
+		lMessage.setText("Le prospect a bien été ajouté et est maintenant disponible dans les devis.");
+		currentPanel.add(lMessage);
+		bNext.setText("Ok!");
+		currentPanel.add(bNext);
+
+		this.add(currentPanel);
+		this.getContentPane().repaint();
+	}
+
+	public void NotCreatedDevis() {
+		this.getContentPane().removeAll();
+		currentPanel = new JPanel();
+		lPrix.setText("Prix");
+		currentPanel.add(lPrix);
+		currentPanel.add(tfPrix);
+		bNextDevis.setText("Envoyer");
+
+		this.add(currentPanel);
+		this.getContentPane().repaint();
+	}
+
+	// public void ClientBackDevis() {
+	// 	this.getContentPane().removeAll();
+	// 	currentPanel = new JPanel();
+
+	// 	this.
+	// }
+}

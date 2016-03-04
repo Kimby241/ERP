@@ -1,0 +1,13 @@
+0000000000000000000000000000000000000000 c35b56b2ff776e565f15005c05e8a577033c248c Steven YUNG <stevenyung@icloud.com> 1456700929 +0000	commit (initial): working MVC
+c35b56b2ff776e565f15005c05e8a577033c248c d456d8dd349c56b99ce32c85a08908d6ad106e84 Steven YUNG <stevenyung@icloud.com> 1456708130 +0000	commit: implement State Machine (working)
+d456d8dd349c56b99ce32c85a08908d6ad106e84 1d09e50a5c320cf46a2466578da241624a41027d Steven YUNG <stevenyung@icloud.com> 1456709616 +0000	commit: add listener to other btn menu
+1d09e50a5c320cf46a2466578da241624a41027d c0d91855c5f96b71214076d567c06db7f3b69751 Steven YUNG <stevenyung@icloud.com> 1456710055 +0000	commit: change state for user
+c0d91855c5f96b71214076d567c06db7f3b69751 a889bc42d77d3e6579bea375d4d411f165076724 Steven YUNG <stevenyung@icloud.com> 1456863008 +0000	commit: add prospect state machine
+a889bc42d77d3e6579bea375d4d411f165076724 01b3d126157f7de471940256ad07a32209b145ac Steven YUNG <stevenyung@icloud.com> 1456870377 +0000	commit: working validation panel
+01b3d126157f7de471940256ad07a32209b145ac 63afb95f2e6ca07114f1813ce3d8c496456bae27 Steven YUNG <stevenyung@icloud.com> 1456871439 +0000	commit: improve file management
+63afb95f2e6ca07114f1813ce3d8c496456bae27 d31fa7459c442cdd3424baec8e589da6b6ed89d5 Steven YUNG <stevenyung@icloud.com> 1456872753 +0100	commit: delete useless files
+d31fa7459c442cdd3424baec8e589da6b6ed89d5 afaaa868b046d9208099e3f553b8d9c3b61213ac Steven YUNG <stevenyung@icloud.com> 1456873495 +0100	commit: improve file management with status
+afaaa868b046d9208099e3f553b8d9c3b61213ac 7ff216dde2af300a9c1db69b78b005a00cc20af1 Steven YUNG <stevenyung@icloud.com> 1456875262 +0100	commit: working changing status but double listener
+7ff216dde2af300a9c1db69b78b005a00cc20af1 cbca7513d93fb9118159e1e1b107ac313b47fba3 Steven YUNG <stevenyung@icloud.com> 1456908699 +0100	commit: Fixed double listener bug
+cbca7513d93fb9118159e1e1b107ac313b47fba3 a8072258c2d636fc049bb61fff50e776ade53840 Steven YUNG <stevenyung@icloud.com> 1456914123 +0100	commit: Add Prospect Needs
+a8072258c2d636fc049bb61fff50e776ade53840 f4be8e049961c3e062c6ed4f9d7b176d79b33bb0 Steven YUNG <stevenyung@icloud.com> 1456917015 +0100	commit: working from prospect to devis

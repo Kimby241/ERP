@@ -1,0 +1,45 @@
+import java.util.ArrayList;
+
+public class ValidatedProspect implements ProspectState {
+	
+	Controller controller;
+	
+	public ValidatedProspect(Controller controller) {
+		this.controller = controller;
+	}
+
+	public void displayForm(ArrayList data) {
+		controller.getView().ProspectNeedsView((String)data.get(0), (String)data.get(1));
+		controller.getView().setVisible(true);
+	}
+
+	public void treatForm(ArrayList data) {
+		Model theModel = controller.getModel();
+		View theView = controller.getView();
+		String client = theView.getLabelFullname();
+		String user = controller.getUser();
+
+		theModel.changeProspectStatus(
+			user,
+			client,
+			theModel.getValidStatus(),
+			theModel.getDoneStatus()
+		);
+		theModel.addNeeds(user, client, theView.getNeeds());
+		controller.setProspectState(controller.getConfirmedNeedProspect());
+		theModel.fromProspectToDevis(user, client);
+		controller.getProspectState().displayForm(null);
+	}
+	
+	// public void createProspect(String firstname, String lastname, String phone, String address, String companyName) {
+	// 	System.out.println("TODO");
+	// }
+
+	// public void validateProspect() {
+	// 	System.out.println("TODO");
+	// }
+
+	// public void confirmNeedProspect(ArrayList needs) {
+	// 	System.out.println("TODO");
+	// }
+}

@@ -1,0 +1,39 @@
+package DataPackage;
+
+import DataPackage.ProcessusComponent;
+import java.util.ArrayList;
+import java.util.Iterator;
+
+public class Devis extends ProcessusComponent {
+	
+	ArrayList facturationComponents = new ArrayList();
+    //TODO: use factory ?
+	String etat;
+	
+	public Devis(String etat){
+		this.etat = etat;
+	}
+	
+	public String getEtat() { return etat; }
+	
+	public void add(ProcessusComponent newProcessusComponent) {
+		facturationComponents.add(newProcessusComponent);
+	}
+	
+	public void remove(ProcessusComponent newProcessusComponent) {
+		facturationComponents.remove(newProcessusComponent);
+	}
+	
+	public ProcessusComponent getComponent(int componentIndex) {
+		return (ProcessusComponent)facturationComponents.get(componentIndex);
+	}
+	
+	public void displayProcessusInfo(){
+		System.out.println("Devis : " + getEtat() + "\n");
+		Iterator processusIterator = facturationComponents.iterator();
+		while(processusIterator.hasNext()) { 
+			ProcessusComponent processusInfo = (ProcessusComponent)processusIterator.next();
+			processusInfo.displayProcessusInfo();
+		}
+	}
+}

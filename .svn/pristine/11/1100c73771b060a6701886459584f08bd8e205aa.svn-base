@@ -1,0 +1,7 @@
+import java.util.ArrayList;
+
+public interface DevisState {
+	void display(ArrayList data);
+
+	void treat(ArrayList data);
+}

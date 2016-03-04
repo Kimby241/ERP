@@ -1,0 +1,20 @@
+{
+  "name": "erp-project",
+  "version": "0.0.1",
+  "description": "A simple ERP web app made with NodeJS",
+  "contributors": [
+    {
+      "name": "Kimberley POBA VANZI",
+      "email": "pobava_k@etna-alternance.net"
+    },
+    {
+      "name": "Steven YUNG",
+      "email": "yung_s@etna-alternance.net"
+    }
+  ],
+  "dependencies": {
+    "ejs": "~2.1.4",
+    "express": "~4.11.0",
+    "body-parser": "~1.10.1"
+  }
+}

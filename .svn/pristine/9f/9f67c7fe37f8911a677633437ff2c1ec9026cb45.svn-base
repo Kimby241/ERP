@@ -1,0 +1,171 @@
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.*;
+import java.util.ArrayList;
+import javax.swing.*;
+
+public class Controller {
+	
+	private View theView;
+	private Model theModel;
+	private String user;
+
+	// state machine for user
+	private UserState notLoggedIn;
+	private UserState loggedIn;
+	private UserState userState;
+
+	// state machine for prospect
+	private ProspectState notCreatedProspect;
+	private ProspectState createdProspect;
+	private ProspectState validatedProspect;
+	private ProspectState confirmedNeedProspect;
+	private ProspectState prospectState;
+
+	public Controller(View theView, Model theModel) {
+		this.theView = theView;
+		this.theModel = theModel;
+
+		// dislay login form first
+		this.theView.LoginView();
+		this.theView.addLoginListener(new LoginListener());
+		theView.setVisible(true);
+
+		// State Machine for user
+		this.notLoggedIn = new NotLoggedIn(this);
+		this.loggedIn = new LoggedIn(this);
+		this.userState = notLoggedIn;
+
+		this.addMenuListener();
+
+		// State machine for prospect
+		this.notCreatedProspect = new NotCreatedProspect(this);
+		this.createdProspect = new CreatedProspect(this);
+		this.validatedProspect = new ValidatedProspect(this);
+		this.confirmedNeedProspect = new ConfirmedNeedProspect(this);
+		this.prospectState = notCreatedProspect;
+		this.addProspectFormListener();
+		System.out.println(theModel.getProspect("Steven"));
+	}
+
+	public View getView() {
+		return theView;
+	}
+
+	public Model getModel() {
+		return theModel;
+	}
+
+	public String getUser() {
+		return this.user;
+	}
+
+	public void setUser(String user) {
+		this.user = user;
+	}
+
+	// LOGIN
+	class LoginListener implements ActionListener {
+
+		public void actionPerformed(ActionEvent e) {
+			userState.tryToLogin(theView.getLogin().getText());
+			userState.displayMenu();
+		}
+	}
+
+	// MENU
+	public void addMenuListener() {
+		this.theView.addProspectListener(new ProspectListener());
+		this.theView.addDevisListener(new DevisListener());
+		this.theView.addFacturationListener(new FacturationListener());
+	}
+
+	class ProspectListener implements ActionListener {
+
+		public void actionPerformed(ActionEvent e) {
+			prospectState.displayForm(null);
+		}
+	}
+
+	class DevisListener implements ActionListener {
+
+		public void actionPerformed(ActionEvent e) {
+			System.out.println("Devis");
+		}
+	}
+
+	class FacturationListener implements ActionListener {
+
+		public void actionPerformed(ActionEvent e) {
+			System.out.println("Facturation");
+		}
+	}
+
+	// PROSPECT
+	public void addProspectFormListener() {
+		this.theView.addCreateListener(new CreateListener());
+	}
+
+	class CreateListener implements ActionListener {
+
+		public void actionPerformed(ActionEvent e) {
+			ArrayList data = new ArrayList();
+			
+			data.add(theView.getFirstname());
+			data.add(theView.getLastname());
+			data.add(theView.getPhone());
+			data.add(theView.getAddress());
+			data.add(theView.getCompanyName());
+			prospectState.treatForm(data);
+		}
+	}
+
+	// State Machine for user
+	public void setUserState(UserState newState) {
+		userState = newState;
+	}
+
+	public UserState getUserState() {
+		return userState;
+	}
+
+	// TODO: check if this func is necessary
+	public void tryToLogin(String username) {
+		userState.tryToLogin(username);
+	}
+
+	public UserState getNotLoggedInState() {
+		return notLoggedIn;
+	}
+
+	public UserState getLoggedInState() {
+		return loggedIn;
+	}
+
+	// State mahine for prospect
+	public void setProspectState(ProspectState newState) {
+		prospectState = newState;
+	}
+
+	public ProspectState getNotCreatedProspect() {
+		return notCreatedProspect;
+	}
+
+	public ProspectState getCreatedProspect() {
+		return createdProspect;
+	}
+
+	public ProspectState getValidatedProspect() {
+		return validatedProspect;
+	}
+
+	public ProspectState getConfirmedNeedProspect() {
+		return confirmedNeedProspect;
+	}
+
+	public ProspectState getProspectState() {
+		return prospectState;
+	}
+
+
+}

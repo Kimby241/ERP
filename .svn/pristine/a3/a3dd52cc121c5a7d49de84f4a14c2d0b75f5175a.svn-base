@@ -1,0 +1,20 @@
+import java.util.ArrayList;
+
+public class ConfirmedNeedProspect implements ProspectState {
+	
+	Controller controller;
+	
+	public ConfirmedNeedProspect(Controller controller) {
+		this.controller = controller;
+	}
+
+	public void displayForm(ArrayList data) {
+		controller.getView().ConfirmedNeedProspect();
+		controller.getView().setVisible(true);
+	}
+
+	public void treatForm(ArrayList data) {
+		controller.setProspectState(controller.getNotCreatedProspect());
+		controller.getProspectState().displayForm(null);
+	}
+}

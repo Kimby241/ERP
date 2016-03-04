@@ -1,0 +1,84 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package IHMPackage;
+
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+
+/**
+ *
+ * @author Kim
+ */
+public class ProspectListDisplayerPane extends StackPane{
+    Button newProspectButton;
+    Label prospectListLabel;
+    Label sortLabel;
+    ComboBox sortOptions;
+    TableView prospectsList;
+    TableColumn prospectID;
+    TableColumn projectName;
+    TableColumn prospectName;
+    TableColumn clientName;
+    TableColumn creationDate;
+    TableColumn note;
+    TableColumn action;
+    TableColumn state;
+    VBox allContent;
+    HBox sortContent;
+    HBox hb;
+    VBox vb;
+    
+    public ProspectListDisplayerPane() {
+        this.prospectListLabel = new Label("Liste des prospects");
+        this.prospectsList = new TableView();
+        this.sortLabel = new Label("Trier par :");
+        this.sortOptions = new ComboBox();
+        this.newProspectButton = new Button("Créer nouveau prospect");
+        this.hb = new HBox();
+        this.vb = new VBox();
+        this.allContent = new VBox();
+        this.sortContent = new HBox();
+        this.sortOptions.getItems().addAll("Tous", "Créé", "Validé", "Confirmé", "Transféré");
+        this.sortOptions.setValue("Tous");
+        
+        prospectID = new TableColumn("Numéro");
+        projectName = new TableColumn("Projet");
+        prospectName = new TableColumn("Prospect");
+        clientName = new TableColumn("Client");
+        creationDate = new TableColumn("Date de création");
+        state = new TableColumn("Etat");
+        
+        note = new TableColumn("Remarque");
+        action =new TableColumn("Modifier");
+        prospectsList.getColumns().addAll(prospectID, prospectName, clientName, projectName, creationDate, state, note, action);
+        
+        
+        
+        
+        this.hb.getChildren().addAll(sortLabel, sortOptions);
+        this.hb.setAlignment(Pos.TOP_RIGHT);
+        this.hb.setSpacing(10);
+        
+        
+        this.vb.getChildren().addAll(newProspectButton, prospectListLabel);
+        this.vb.setAlignment(Pos.TOP_LEFT);
+        this.vb.setSpacing(10);
+        
+        this.sortContent.getChildren().addAll(vb, hb);
+        this.sortContent.setSpacing(10);
+        allContent.setPadding(new Insets(15, 12, 15, 12));
+        this.allContent.getChildren().addAll(sortContent, prospectsList);
+        this.getChildren().addAll(allContent);
+    }
+}

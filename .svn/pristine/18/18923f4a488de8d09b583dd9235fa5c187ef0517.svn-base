@@ -1,0 +1,17 @@
+var logManager = require('./log-manager');
+
+module.exports = {
+    login: function(login, callback) {
+        var users = logManager.getUsers(function(users) {
+            var user;
+            for (var i = 0; i < users.length; i++) {
+                if (users[i] === login) {
+                    user = users[i];
+                }
+            }
+            if (callback !== undefined) {
+                callback(user);
+            }
+        });
+    }
+};

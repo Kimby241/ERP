@@ -1,0 +1,296 @@
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
+public class Model {
+    //TODO: Change pathfile to the given arborenscence in the subject
+    private final String usersFile = "users.txt";
+    private static final String PENDING_STATUS = "pending";
+    private static final String VALID_STATUS = "valid";
+    private static final String DONE_STATUS = "done";
+
+
+    public String getPendingStatus() {
+    	return PENDING_STATUS;
+    }
+
+    public String getValidStatus() {
+    	return VALID_STATUS;
+    }
+
+    public String getDoneStatus() {
+    	return DONE_STATUS;
+    }
+
+    public String getFilePath(int fileType, String user) {
+    	String filePath;
+    	if (fileType == 0) {
+    		filePath = "./" + usersFile;
+    	}
+    	else if (fileType == 1) {
+    		filePath = "./" + user + "/Prospect/log.txt";
+    	}
+    	else if (fileType == 2) {
+    		filePath = "./" + user + "/Devis/log.txt";
+    	}
+    	else if (fileType == 3) {
+    		filePath = "./" + user + "/log.txt";
+    	}
+    	else {
+    		filePath = null;
+    	}
+
+    	return filePath;
+    }
+
+    public void createFileAndPath(File targetFile) {
+    	try {
+    		File parent = targetFile.getParentFile();
+    		if(!parent.exists() && !parent.mkdirs()){
+    			throw new IllegalStateException("Couldn't create dir: " + parent);
+    		}
+
+    		if (targetFile.createNewFile()){
+    			System.out.println("File is created!");
+    		} else {
+    			System.out.println("File already exists.");
+    		}
+    	} catch (IOException e) {
+    		e.printStackTrace();
+    	}
+    }
+
+    public ArrayList readFile(FileReader fileReader) {
+    	try {
+    		BufferedReader bufferedReader = new BufferedReader(fileReader);
+    		String line = null;
+    		ArrayList users = new ArrayList();
+
+    		while((line = bufferedReader.readLine()) != null) {
+    			users.add(line);
+    		}
+
+    		bufferedReader.close();         
+    		return users;
+    	}
+    	catch(FileNotFoundException ex) {
+    		System.out.println("Unable to open file '" + usersFile + "'");                
+    	}
+    	catch(IOException ex) {
+    		System.out.println("Error reading file '" + usersFile + "'");                  
+    	}
+
+    	return null;
+    }
+
+    public String getCurrentDate() {
+    	DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+    	Date date = new Date();
+    	return "[" + dateFormat.format(date) + "] ";
+    }
+
+    public ArrayList getUsers() {
+    	try {
+    		FileReader fileReader = new FileReader(usersFile);
+    		return this.readFile(fileReader);
+    	} catch (IOException e) {
+    		e.printStackTrace();
+    	}
+
+    	return null;
+    }
+
+    /* LOG */
+    public void setLog(int type, String user, String client, String content) {
+    	String filePath = this.getFilePath(type, user);
+    	File targetFile = new File(filePath);
+    	this.createFileAndPath(targetFile);
+    	try {
+    		FileWriter writer = new FileWriter(filePath, true);
+    		writer.write(this.getCurrentDate() + content + "\n");
+    		writer.close();
+    	} catch (IOException e) {
+    		e.printStackTrace();
+    	}
+    }
+
+    public ArrayList getLog(int type, String user, String client) {
+    	try {
+    		String filePath = this.getFilePath(type, user);
+    		FileReader fileReader = new FileReader(filePath);
+    		return this.readFile(fileReader);
+    	} catch (IOException e) {
+    		e.printStackTrace();
+    	}
+
+    	return null;
+    }
+
+    /* PROSPECT */
+    private String prospectFilePath(String user, String client, String status) {
+		if (status == null) {
+		    status = PENDING_STATUS;
+		}
+
+		return "./" + user + "/Prospect/" + status + "/" + client + ".txt";
+	}
+
+	public ArrayList listFilesForFolder(final File folder) {
+		ArrayList users = new ArrayList();
+		for (final File fileEntry : folder.listFiles()) {
+			if (fileEntry.isDirectory()) {
+				listFilesForFolder(fileEntry);
+			} else {
+				users.add(fileEntry);
+			}
+		}
+		return users;
+	}
+
+	public ArrayList getProspect(String user) {
+		ArrayList result = new ArrayList();
+		ArrayList pendingUsers = new ArrayList();
+		ArrayList validUsers = new ArrayList();
+		ArrayList doneUsers = new ArrayList();
+
+		File folder = new File("./" + user + "/Prospect/pending/");
+		pendingUsers = listFilesForFolder(folder);
+		result.add(pendingUsers);
+		File folder2 = new File("./" + user + "/Prospect/valid/");
+		validUsers = listFilesForFolder(folder2);
+		result.add(validUsers);
+		File folder3 = new File("./" + user + "/Prospect/done/");
+		doneUsers = listFilesForFolder(folder3);
+		result.add(doneUsers);
+
+		return result;
+	}
+
+	public void setProspect(String user, ArrayList data) {
+		int i;
+		String client = data.get(0) + " " + data.get(1);
+		String filePath = prospectFilePath(user, client, null);
+		File targetFile = new File(filePath);
+		this.createFileAndPath(targetFile);
+		try {
+		    FileWriter writer = new FileWriter(filePath, true);
+		    for (i = 2; i < data.size(); i++) {
+			writer.write(data.get(i) + "\n");
+		    }
+		    writer.close();
+		} catch (IOException e) {
+		    e.printStackTrace();
+		}
+		this.setLog(1, user, client, "Ajout du prospect " + client);
+	    }
+
+	    public ArrayList getProspect(String user, String client) {
+		try {
+		    String filePath = prospectFilePath(user, client, null);
+		    FileReader fileReader = new FileReader(filePath);
+		    return this.readFile(fileReader);
+		} catch (IOException e) {
+		    e.printStackTrace();
+		}
+
+		return null;
+    }
+
+    public void changeProspectStatus(String user, String client, String oldStatus, String newStatus) {
+		InputStream inStream = null;
+		OutputStream outStream = null;
+
+		try{
+
+		    String apath = prospectFilePath(user, client, oldStatus);
+		    String bpath = prospectFilePath(user, client, newStatus);
+		    File afile = new File(apath);
+		    File bfile = new File(bpath);
+		    this.createFileAndPath(bfile);
+
+
+		    inStream = new FileInputStream(afile);
+		    outStream = new FileOutputStream(bfile);
+
+		    byte[] buffer = new byte[1024];
+
+		    int length;
+		    while ((length = inStream.read(buffer)) > 0) {
+			outStream.write(buffer, 0, length);
+		    }
+
+		    inStream.close();
+		    outStream.close();
+
+		    afile.delete();
+
+		    System.out.println("File is copied successful!");
+		    this.setLog(1, user, client, "Passage du status " + oldStatus + " à " + newStatus + " pour le client " + client);
+
+
+		}catch(IOException e){
+		    e.printStackTrace();
+		}
+    }
+
+    public void addNeeds(String user, String client, String needs) {
+		String filePath = prospectFilePath(user, client, DONE_STATUS);
+		File targetFile = new File(filePath);
+
+		this.createFileAndPath(targetFile);
+		try {
+		    FileWriter writer = new FileWriter(filePath, true);
+		    writer.write(needs + "\n");
+		    writer.close();
+		} catch (IOException e) {
+		    e.printStackTrace();
+		}
+		this.setLog(1, user, client, "Ajout des besoins du prospect " + client);
+	}
+
+	/* DEVIS */
+	private String devisFilePath(String user, String client, String status, int id) {
+		if (id == 0 && status == null) {
+			return "./" + user + "/Devis/" + client + "/info.txt";
+		}
+		else if (status == null) {
+			status = PENDING_STATUS;
+		}
+
+		return "./" + user + "/Devis/" + client + "/" + status + "/" + Integer.toString(id) + ".txt";
+	}
+
+	public void fromProspectToDevis(String user, String client) {
+		InputStream inStream = null;
+		OutputStream outStream = null;
+
+		try{
+			String apath = prospectFilePath(user, client, DONE_STATUS);
+			String bpath = devisFilePath(user, client, null, 0);
+			File afile = new File(apath);
+			File bfile = new File(bpath);
+			this.createFileAndPath(bfile);
+
+			inStream = new FileInputStream(afile);
+			outStream = new FileOutputStream(bfile);
+
+			byte[] buffer = new byte[1024];
+
+			int length;
+			while ((length = inStream.read(buffer)) > 0) {
+				outStream.write(buffer, 0, length);
+			}
+
+			inStream.close();
+			outStream.close();
+
+			System.out.println("File is copied successful!");
+			this.setLog(2, user, client, "Ajout de " + client + " displonible pour les devis");
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
+	}
+}
